@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: wishcompanion-db
+    environment:
+      POSTGRES_DB: wishcompanion
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"  # Changed from 5432 to 5433 (external:internal)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - wishcompanion-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: wishcompanion-redis
+    ports:
+      - "6380:6379"  # Changed from 6379 to 6380 (external:internal)
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - wishcompanion-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wishcompanion-backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/wishcompanion
+      REDIS_URL: redis://redis:6379
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID}
+      REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET}
+      IMGUR_CLIENT_ID: ${IMGUR_CLIENT_ID}
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production}
+      ENVIRONMENT: development
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - wishcompanion-network
+    profiles:
+      - with-backend
+
+  # Celery Worker
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wishcompanion-celery-worker
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/wishcompanion
+      REDIS_URL: redis://redis:6379
+      REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID}
+      REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET}
+      IMGUR_CLIENT_ID: ${IMGUR_CLIENT_ID}
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ./backend:/app
+    command: celery -A app.tasks.celery_app worker --loglevel=info
+    networks:
+      - wishcompanion-network
+    profiles:
+      - with-backend
+
+  # Celery Beat
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wishcompanion-celery-beat
+    environment:
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - redis
+    volumes:
+      - ./backend:/app
+    command: celery -A app.tasks.celery_app beat --loglevel=info
+    networks:
+      - wishcompanion-network
+    profiles:
+      - with-backend
+
+volumes:
+  postgres_data:
+
+networks:
+  wishcompanion-network:
+    driver: bridge
