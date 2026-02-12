@@ -1,30 +1,55 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
 from app.database import get_db
+from app.models import User, Preference
+from app.schemas.auth import UserRegister, UserLogin, Token, UserResponse
+from app.utils.auth import hash_password, verify_password, create_access_token
+from app.dependencies import get_current_user
 
 router = APIRouter()
 
-@router.post("/register")
-async def register(db: AsyncSession = Depends(get_db)):
+@router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+async def register(user_data: UserRegister, db: AsyncSession = Depends(get_db)):
     """Register a new user"""
-    # TODO: Implement in Issue #26
-    return {"message": "Registration endpoint - TODO"}
+    result = await db.execute(select(User).where(User.email == user_data.email))
+    existing_user = result.scalar_one_or_none()
+    
+    if existing_user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
+    
+    hashed_password = hash_password(user_data.password)
+    new_user = User(email=user_data.email, password_hash=hashed_password, name=user_data.name)
+    
+    db.add(new_user)
+    await db.commit()
+    await db.refresh(new_user)
+    
+    preferences = Preference(user_id=new_user.id, preferred_tags=[], blocked_tags=[], settings={"font_size": "medium"})
+    db.add(preferences)
+    await db.commit()
+    
+    return new_user
 
-@router.post("/login")
-async def login(db: AsyncSession = Depends(get_db)):
+@router.post("/login", response_model=Token)
+async def login(credentials: UserLogin, db: AsyncSession = Depends(get_db)):
     """Login and receive JWT token"""
-    # TODO: Implement in Issue #26
-    return {"message": "Login endpoint - TODO"}
+    result = await db.execute(select(User).where(User.email == credentials.email))
+    user = result.scalar_one_or_none()
+    
+    if not user or not verify_password(credentials.password, user.password_hash):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect email or password")
+    
+    access_token = create_access_token(data={"sub": str(user.id)})
+    return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/logout")
 async def logout():
-    """Logout (invalidate token)"""
-    # TODO: Implement in Issue #26
-    return {"message": "Logout endpoint - TODO"}
+    """Logout"""
+    return {"message": "Logged out successfully"}
 
-@router.get("/me")
-async def get_current_user():
-    """Get current authenticated user"""
-    # TODO: Implement in Issue #26
-    return {"message": "Current user endpoint - TODO"}
+@router.get("/me", response_model=UserResponse)
+async def get_me(current_user: User = Depends(get_current_user)):
+    """Get current user"""
+    return current_user
