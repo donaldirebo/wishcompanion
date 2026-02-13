@@ -64,16 +64,7 @@ Build a dedicated Progressive Web App that:
 **Content:** YouTube RSS + Reddit RSS + Imgur API  
 **Deployment:** Vercel + Railway  
 
-## 📅 Development Timeline
 
-**Project Started:** Feb 11, 2026  
-**Target Completion:** June 2026 (16 weeks)
-
-- 🏗️ **Phase 1:** Foundation (Weeks 1-4) ← IN PROGRESS (27% done!)
-- 🎨 **Phase 2:** Content System (Weeks 5-7)
-- 📱 **Phase 3:** User Interface (Weeks 8-9)
-- 🧪 **Phase 4:** Testing (Weeks 10-12)
-- 📝 **Phase 5:** Thesis (Weeks 13-16)
 
 ## 👥 Development Team
 
@@ -85,9 +76,7 @@ Build a dedicated Progressive Web App that:
 ## 🎓 Academic Context
 
 **Program:** MSc in Cyber-Physical Systems  
-**University:** Northeastern University  
-**Student:** Donald Irebo  
-**Expected Completion:** June 2026  
+**University:** Northeastern University   
 **Project Type:** Thesis - Healthcare Technology
 
 ## 📊 Current Progress
