@@ -9,7 +9,7 @@
 Wishscroll is a **brand new content curation platform** being built from scratch to bring joy to hospital and hospice patients through curated positive content.
 
 **Current Situation at Wishplay:**
-For the last 10 years, Wishplay staff have been manually saving uplifting posts from Reddit and Imgur. When patients want to view these saved posts, they currently log into the staff's Reddit account on their devices. This approach has problems:
+When patients want to view these saved posts, they currently log into the staff's Reddit account on their devices. This approach has problems:
 - Patients are exposed to ALL of Reddit (negative news, politics, toxic content)
 - Only one account can be used at a time
 - No personalization for individual patients
@@ -64,16 +64,7 @@ Build a dedicated Progressive Web App that:
 **Content:** YouTube RSS + Reddit RSS + Imgur API  
 **Deployment:** Vercel + Railway  
 
-## 📅 Development Timeline
 
-**Project Started:** Feb 11, 2026  
-**Target Completion:** June 2026 (16 weeks)
-
-- 🏗️ **Phase 1:** Foundation (Weeks 1-4) ← IN PROGRESS (27% done!)
-- 🎨 **Phase 2:** Content System (Weeks 5-7)
-- 📱 **Phase 3:** User Interface (Weeks 8-9)
-- 🧪 **Phase 4:** Testing (Weeks 10-12)
-- 📝 **Phase 5:** Thesis (Weeks 13-16)
 
 ## 👥 Development Team
 
@@ -85,9 +76,7 @@ Build a dedicated Progressive Web App that:
 ## 🎓 Academic Context
 
 **Program:** MSc in Cyber-Physical Systems  
-**University:** Northeastern University  
-**Student:** Donald Irebo  
-**Expected Completion:** June 2026  
+**University:** Northeastern University   
 **Project Type:** Thesis - Healthcare Technology
 
 ## 📊 Current Progress
