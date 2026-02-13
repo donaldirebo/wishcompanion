@@ -9,7 +9,7 @@
 Wishscroll is a **brand new content curation platform** being built from scratch to bring joy to hospital and hospice patients through curated positive content.
 
 **Current Situation at Wishplay:**
-For the last 10 years, Wishplay staff have been manually saving uplifting posts from Reddit and Imgur. When patients want to view these saved posts, they currently log into the staff's Reddit account on their devices. This approach has problems:
+When patients want to view these saved posts, they currently log into the staff's Reddit account on their devices. This approach has problems:
 - Patients are exposed to ALL of Reddit (negative news, politics, toxic content)
 - Only one account can be used at a time
 - No personalization for individual patients
