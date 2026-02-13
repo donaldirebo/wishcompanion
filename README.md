@@ -1,129 +1,111 @@
 # 🎨 Wishscroll - Happy Scrolling
 
-> Safe, positive content app for hospital and hospice patients
+> NEW positive content app for hospital and hospice patients
 
 [![Project Board](https://img.shields.io/badge/Project-Board-blue)](https://github.com/users/donaldirebo/projects/2)
 
 ## 📖 What is Wishscroll?
 
-Wishscroll is a content curation platform that brings joy to hospital and hospice patients by providing a safe, positive alternative to traditional social media. Inspired by youboop.com's clean interface with auto-play capabilities.
+Wishscroll is a **brand new content curation platform** being built from scratch to bring joy to hospital and hospice patients through curated positive content.
 
-**The Problem:**
-For 10 years, Wishplay organization has been saving uplifting posts from Reddit and social media. Currently, patients access these by logging into staff accounts - exposing them to ALL content (negative news, politics, toxic comments).
+**Current Situation at Wishplay:**
+For the last 10 years, Wishplay staff have been manually saving uplifting posts from Reddit and Imgur. When patients want to view these saved posts, they currently log into the staff's Reddit account on their devices. This approach has problems:
+- Patients are exposed to ALL of Reddit (negative news, politics, toxic content)
+- Only one account can be used at a time
+- No personalization for individual patients
+- Clunky user experience
+- No content filtering or safety controls
 
-**The Solution:**
-A dedicated PWA showing ONLY curated positive content with smart filtering and personalized recommendations.
+**Our Solution (NEW App - Wishscroll):**
+Build a dedicated Progressive Web App that:
+- Shows ONLY curated positive content
+- Has automated content filtering
+- Personalizes to each patient's preferences
+- Provides safe, controlled environment
+- Scales to multiple patients simultaneously
+- Modern, accessible interface
 
-## ✨ Core Features
+**This is a greenfield project** - we're building Wishscroll from the ground up!
 
-### 🖼️ Content Sources (RSS-Based - No API Quotas!)
-- **YouTube Videos** - Via RSS feeds from positive channels (unlimited!)
+## ✨ Core Features (Being Built)
+
+### 🖼️ Content Sources (RSS-Based)
+- **YouTube Videos** - Via RSS feeds from positive channels
   - The Dodo, BBC Earth, National Geographic, animal channels
-- **Reddit Posts** - Via RSS feeds from positive subreddits (unlimited!)
-  - r/aww, r/MadeMeSmile, r/UpliftingNews, r/wholesome, etc.
-- **Imgur Images** - Via API (generous 12,500/day limit)
+  - NO API quotas - unlimited scaling!
+- **Reddit Posts** - Via RSS feeds from positive subreddits  
+  - r/aww, r/MadeMeSmile, r/UpliftingNews, etc.
+  - NO API quotas - unlimited scaling!
+- **Imgur Images** - Via API (generous free tier)
 
-**Why RSS?** Unlimited scaling - serve 10 or 10,000 users with zero quota concerns!
+### 📱 youboop.com-Inspired Interface (NEW!)
+- Full-screen vertical content display
+- Circular navigation buttons (◄ Back, Next ►)
+- Auto-play mode (shiya801's innovation!)
+- Swipe gestures
+- Like/Save/Share functionality
 
-### 📱 youboop.com-Inspired Interface
-- **Full-screen vertical display** (mobile-optimized)
-- **Circular navigation buttons** (bottom corners)
-  - ◄ Back button (left)
-  - ► Next button (right)
-- **Swipe gestures** (left=back, right=next)
-- **Auto-play mode** (shiya801's innovation!)
-  - Auto-advance after 3s/5s/10s
-  - Perfect for low-energy patients
-  - Toggle on/off anytime
+### 🎯 4-Layer Content Filtering (NEW!)
+1. NSFW blocking
+2. Keyword blacklist (death, war, politics, etc.)
+3. Sentiment analysis (positive only)
+4. Quality thresholds (upvote minimums)
 
-### 🎯 Smart Content Filtering
-**4-Layer Safety System:**
-1. **NSFW Filter** - Block adult content
-2. **Keyword Blacklist** - Block negative words (death, war, politics, sad, etc.)
-3. **Sentiment Analysis** - Only show positive content (score > 0.4)
-4. **Quality Filter** - Minimum upvote/view thresholds
-
-### 💫 User Features
-- ❤️ Like/Dislike tracking
-- ⭐ Save favorites
-- ↗️ Share with family
-- 🎲 Shuffle mode (random content)
-- 🎯 Personalization (learns preferences)
-- 📊 Filter by: New, Trending, Top, Category
-
-### ♿ Accessibility
-- Large touch targets (56x56px buttons)
-- High contrast (white buttons on dark backgrounds)
-- Adjustable font sizes
-- Simple, clear navigation
-- Designed for elderly/ill patients
+### 💫 Personalization (NEW!)
+- Learns what each patient enjoys
+- Adjusts content based on likes/dislikes
+- Category preferences
+- Individual user profiles
 
 ## 🏗️ Tech Stack
 
 **Frontend:** React 18 + TypeScript + Vite + PWA  
-**Backend:** FastAPI (Python) + PostgreSQL + Redis + Celery  
+**Backend:** FastAPI + PostgreSQL + Redis + Celery  
 **Content:** YouTube RSS + Reddit RSS + Imgur API  
-**Parsing:** feedparser (RSS), TextBlob (sentiment)  
-**Deployment:** Vercel (frontend) + Railway (backend)  
-**DevOps:** Docker + GitHub Actions
+**Deployment:** Vercel + Railway  
 
-## 📊 Architecture Highlights
+## 📅 Development Timeline
 
-**Scalable Content Ingestion:**
-```
-Celery (every hour) → Fetch RSS feeds → Filter content → Store in PostgreSQL
-Users → Read from database (instant, no quotas!)
-```
+**Project Started:** Feb 11, 2026  
+**Target Completion:** June 2026 (16 weeks)
 
-**Why This Scales:**
-- RSS feeds have NO quotas
-- External APIs called once/hour (not per user!)
-- Can serve unlimited users from cached database
-- $0 content costs forever
+- 🏗️ **Phase 1:** Foundation (Weeks 1-4) ← IN PROGRESS (27% done!)
+- 🎨 **Phase 2:** Content System (Weeks 5-7)
+- 📱 **Phase 3:** User Interface (Weeks 8-9)
+- 🧪 **Phase 4:** Testing (Weeks 10-12)
+- 📝 **Phase 5:** Thesis (Weeks 13-16)
 
-## 📅 Timeline (12 Weeks)
+## 👥 Development Team
 
-- 🏗️ **Phase 1:** Foundation (Weeks 1-4) - Database, Auth, API ✅ 27% Complete!
-- 🎨 **Phase 2:** Content System (Weeks 5-7) - RSS feeds, filtering
-- 📱 **Phase 3:** User Interface (Weeks 8-9) - youboop.com-style swiper, auto-play
-- 🧪 **Phase 4:** Testing & Polish (Weeks 10-12) - User testing, deployment
-- 📝 **Phase 5:** Thesis (Weeks 13-16) - Documentation, defense
-
-## 👥 Team
-
-- **Donald Irebo** (donaldirebo) - Backend Lead
-- **Reuben Comla** (ReubenComla) - Frontend Lead  
-- **shiya801** - PM / QA (auto-play feature idea!)
-- **empressT** (empress-t-png) - Documentation / Research
+- **Donald Irebo** - Backend Lead (Database, APIs, Content System)
+- **Reuben Comla** - Frontend Lead (React, UI/UX, PWA)
+- **shiya801** - PM / QA (Auto-play feature innovator!)
+- **empressT** - Documentation / Research
 
 ## 🎓 Academic Context
 
 **Program:** MSc in Cyber-Physical Systems  
 **University:** Northeastern University  
-**Completion:** June 2026  
-**Focus:** Scalable content curation for healthcare wellness
+**Student:** Donald Irebo  
+**Expected Completion:** June 2026  
+**Project Type:** Thesis - Healthcare Technology
 
-## 🚀 Quick Start
-```bash
-git clone https://github.com/donaldirebo/wishcompanion.git
-cd wishcompanion
+## 📊 Current Progress
 
-# Start services
-docker-compose up -d db redis
+**Completed (4/15 issues):**
+- ✅ Repository structure
+- ✅ PostgreSQL database (4 tables)
+- ✅ FastAPI backend with routers
+- ✅ JWT authentication system
 
-cd backend
-uvicorn app.main:app --reload
+**In Progress:**
+- 🏗️ RSS content ingestion (YouTube, Reddit)
+- 🏗️ Content filtering system
+- 🏗️ Frontend development
 
-# Backend: http://localhost:8000
-# API Docs: http://localhost:8000/docs
-```
-
-## 📊 Project Tracking
-
-**Board:** https://github.com/users/donaldirebo/projects/2  
-**Progress:** 4/15 issues complete (27%)
+**Board:** https://github.com/users/donaldirebo/projects/2
 
 ---
 
-⭐ Creating safe digital spaces for vulnerable populations  
-💡 Special thanks to shiya801 for auto-play feature concept!
+⭐ **This is a brand new application** - building safe digital spaces from scratch  
+💡 Special thanks to shiya801 for auto-play innovation!
