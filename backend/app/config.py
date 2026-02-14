@@ -2,24 +2,28 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 
 class Settings(BaseSettings):
-    # Database
+    # Database (with development default)
     DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5433/wishcompanion"
     
-    # Redis
+    # Redis (with development default)
     REDIS_URL: str = "redis://localhost:6380"
     
-    # API Keys
-    REDDIT_CLIENT_ID: str = ""
-    REDDIT_CLIENT_SECRET: str = ""
-    IMGUR_CLIENT_ID: str = ""
-    
-    # Security
-    SECRET_KEY: str = "your-secret-key-change-in-production-min-32-characters"
+    # Security (with development default)
+    SECRET_KEY: str = "dev-secret-key-change-in-production-min-32-chars"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
     
+    # Optional
+    IMGUR_CLIENT_ID: str = ""
+    
     # Environment
     ENVIRONMENT: str = "development"
+    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:3000"
+    LOG_LEVEL: str = "INFO"
+    
+    @property
+    def cors_origins(self):
+        return [o.strip() for o in self.ALLOWED_ORIGINS.split(',')]
     
     class Config:
         env_file = ".env"
