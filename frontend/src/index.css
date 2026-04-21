@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ── Design Tokens ── */
+:root {
+  --gold:         #D4A017;
+  --gold-dim:     #B8860B;
+  --glow-gold:    rgba(212, 160, 23, 0.45);
+  --like:         #00C97A;
+  --like-glow:    rgba(0, 201, 122, 0.5);
+  --dislike:      #E8305A;
+  --dislike-glow: rgba(232, 48, 90, 0.5);
+  --fav:          #8B5CF6;
+  --fav-glow:     rgba(139, 92, 246, 0.5);
+
+  /* Light / White theme */
+  --bg:       #FFFFFF;
+  --surface:  #F7F6FF;
+  --surface2: #EEEEFF;
+  --border:   rgba(0, 0, 0, 0.08);
+  --text:     #1A1830;
+  --muted:    rgba(26, 24, 48, 0.48);
+}
+
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  /* Larger base font for 55+ readability */
+  font-size: 18px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollable area ── */
+.scroll-area {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.scroll-area::-webkit-scrollbar { display: none; }
+
+/* ── Typography helpers ── */
+.font-display { font-family: 'Playfair Display', serif; }
+
+.gradient-gold {
+  background: linear-gradient(135deg, #1A1830 0%, var(--gold) 55%, var(--fav) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-fav {
+  background: linear-gradient(135deg, #1A1830, var(--fav));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-like {
+  background: linear-gradient(135deg, var(--like), #00A060);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Input — bigger for aged users ── */
+.ws-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.03);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 16px 20px;
+  color: var(--text);
+  font-size: 18px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ws-input::placeholder { color: var(--muted); }
+.ws-input:focus {
+  border-color: rgba(212, 160, 23, 0.55);
+  background: rgba(212, 160, 23, 0.04);
+  box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.12);
+}
+
+/* ── Primary button — larger tap target ── */
+.ws-btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  border: none;
+  border-radius: 20px;
+  padding: 20px;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 20px;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(212, 160, 23, 0.35);
+  transition: opacity 0.2s, transform 0.15s;
+  min-height: 64px;
+}
+.ws-btn-primary:hover { opacity: 0.92; }
+.ws-btn-primary:active { transform: scale(0.98); }
+.ws-btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ── Action buttons (feed) — larger for aged users ── */
+.action-btn-base {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  background: transparent;
+}
+.action-btn-base:active { transform: scale(0.88); }
+
+.btn-dislike {
+  border-color: rgba(232, 48, 90, 0.55);
+  background: rgba(232, 48, 90, 0.1);
+  box-shadow: 0 0 22px rgba(232, 48, 90, 0.25), 0 0 50px rgba(232, 48, 90, 0.08);
+}
+.btn-fav {
+  border-color: rgba(139, 92, 246, 0.55);
+  background: rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 26px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+}
+.btn-like {
+  border-color: rgba(0, 201, 122, 0.55);
+  background: rgba(0, 201, 122, 0.1);
+  box-shadow: 0 0 22px rgba(0, 201, 122, 0.25), 0 0 50px rgba(0, 201, 122, 0.08);
+}
+
+/* ── Bottom nav — taller with bigger icons for aged users ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 50;
+  box-shadow: 0 -4px 24px rgba(139, 92, 246, 0.07);
+}
+
+/* ── Animations ── */
+@keyframes spin        { to { transform: rotate(360deg); } }
+@keyframes pulse-soft  { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@keyframes float       { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes stamp-in    { 0% { opacity: 0; transform: translateX(-50%) scale(0.5) rotate(-8deg); } 100% { opacity: 1; transform: translateX(-50%) scale(1) rotate(-6deg); } }
+
+/* ── Accessibility: larger text overrides for 55+ ── */
+
+/* All paragraph and span text minimum size */
+p, span, label, li { font-size: 16px; }
+
+/* Nav labels */
+.bottom-nav span { font-size: 13px !important; }
+
+/* Nav icons */
+.bottom-nav .text-xl { font-size: 28px !important; }
+
+/* Page headings */
+h1 { font-size: 32px !important; }
+h2 { font-size: 28px !important; }
+h3 { font-size: 24px !important; }
+
+/* Stat numbers on profile */
+.font-display.text-2xl { font-size: 30px !important; }
+
+/* Filter chips and small badges */
+.text-xs { font-size: 14px !important; }
+.text-sm { font-size: 16px !important; }
+
+/* Feed title */
+.text-xl { font-size: 24px !important; }
+.text-2xl { font-size: 28px !important; }
+
+/* Buttons throughout app */
+button { font-size: 16px; min-height: 52px; }
